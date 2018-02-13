@@ -261,9 +261,9 @@
                         @else
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }}</a></li>
                         <li class="divider"></li>
-                        <li><a href="{{route('profile', Auth::user()->id)}}"><i class="fa fa-user fa-fw"></i> Profile</a>
+                        <li><a href="{{route('profile', Auth::user()->useruniqid)}}"><i class="fa fa-user fa-fw"></i> Profile</a>
                         </li>
-                        <li><a href="{{route('setting', Auth::user()->id)}}"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="{{route('setting', Auth::user()->useruniqid)}}"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>

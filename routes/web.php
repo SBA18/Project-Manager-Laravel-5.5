@@ -24,9 +24,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users', 'UsersController@index')->name('users');
 Route::get('/user/{user}', 'UsersController@show');
 
-Route::get('/account/{user}/profile', 'UsersController@profile')->name('profile');
+Route::get('/user/profile/{useruniqid}', 'UsersController@profile')->name('profile');
 
-Route::get('/account/{user}/setting', 'UsersController@setting')->name('setting');
+Route::get('/user/setting/{useruniqid}', 'UsersController@setting')->name('setting');
 
 // Customer routes
 
