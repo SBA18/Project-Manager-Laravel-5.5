@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Customer;
+use App\Task;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -16,8 +17,8 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = Project::latest()->get();
-
-        return view('projects.index', compact('projects'));
+        $customers_numbers = Customer::get()->count();
+        return view('projects.index', compact('projects', 'customers_numbers'));
     }
 
     /**
@@ -28,7 +29,6 @@ class ProjectsController extends Controller
     public function create()
     {
         $customers = Customer::latest()->get();
-
         return view('projects.create', compact('customers'));
     }
 
@@ -47,7 +47,9 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
+        $customers_numbers = Customer::get()->count();
+        if ($customers_numbers != 0) {
+            $this->validate(request(), [
             'customer_id' => 'required',
             'project_name' => 'required',
             'started_at' => 'required',
@@ -69,6 +71,11 @@ class ProjectsController extends Controller
         ]);
 
         return redirect()->route('projects.show', $project);
+        }
+        else{
+            return redirect()->back()->with('message', 'You have to create a customer first before creating a project');
+        }
+        
     }
 
     /**
@@ -80,8 +87,8 @@ class ProjectsController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
-
-        return view('projects.show', compact('project'));
+        $tasks = Task::get()->count();
+        return view('projects.show', compact('project', 'tasks'));
     }
 
     /**
@@ -90,9 +97,11 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit(Project $project)
+    public function edit($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('projects.edit', compact('project'));
     }
 
     /**
@@ -102,9 +111,33 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        
+        $this->validate(request(), [
+            'project_name' => 'required',
+            'started_at' => 'required',
+            'ended_at' => 'required',
+            'project_status' => 'required',
+            'budget' => 'required',
+            'project_description' => 'required'
+        ]);
+
+
+        $project = Project::findOrFail($id);
+
+        $project->project_name = request('project_name');
+        $project->started_at = request('started_at');
+        $project->ended_at = request('ended_at');
+        $project->project_status = request('project_status');
+        $project->budget = request('budget');
+        $project->project_description = request('project_description');
+
+        $project->update();
+
+        return redirect()->route('projects.show', $project);
+
     }
 
     /**
@@ -113,8 +146,17 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $tasks = Task::get()->count();
+
+        if ($tasks >= 1) {     
+            return redirect()->back();
+        }
+        else{
+            $project->delete();
+            return redirect()->route('projects.index');
+        } 
     }
 }

@@ -10,8 +10,9 @@
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-12">
-        <form role="form" method="POST" action="{{route('customers.store')}}">
+        <form role="form" method="POST" action="{{route('customers.update', $customer->id)}}">
             {{ csrf_field() }}
+            {{ method_field('PATCH') }}
             <div class="row">
                 <div class="col-lg-6">
                     <h3>Personal Information</h3>

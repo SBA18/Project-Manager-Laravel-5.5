@@ -140,8 +140,16 @@
                 <hr>
                 <p>
                     <a href="#" type="button" class="btn btn-info"><i class="fa fa-plus-square fa-fw"></i> New Ticket</a> &nbsp;
-                    <a href="#" type="button" class="btn btn-warning"><i class="fa fa-edit fa-fw"></i> Edit</a> &nbsp;
-                    <a href="#" type="button" class="btn btn-danger"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+                    <a href="{{ route('tasks.edit', $task->id) }}" type="button" class="btn btn-warning"><i class="fa fa-edit fa-fw"></i> Edit</a> &nbsp;
+                    <a href="{{ route('tasks.destroy', $task->id) }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('delete-form').submit();" type="button" class="btn btn-danger"><i class="fa fa-trash-o fa-fw"></i> Delete
+                    </a>
+
+                    <form id="delete-form" action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                    </form>
                 </p>
                 <hr>
             </div>    

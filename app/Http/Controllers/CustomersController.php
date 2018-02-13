@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\User;
 use Illuminate\Http\Request;
+use App\Project;
 
 class CustomersController extends Controller
 {
@@ -89,7 +90,9 @@ class CustomersController extends Controller
     {
         $customer = Customer::find($id);
 
-        return view('customers.show', compact('customer'));
+        $projects = Project::get()->count();
+
+        return view('customers.show', compact('customer', 'projects'));
     }
 
     /**
@@ -98,8 +101,9 @@ class CustomersController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit($id)
     {
+        $customer = Customer::find($id);
         return view('customers.edit', compact('customer'));
     }
 
@@ -110,9 +114,38 @@ class CustomersController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        $this->validate(request(), [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'company' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'address_street' => 'required',
+            'address_city' => 'required',
+            'address_postal' => 'required',
+            'address_country' => 'required',
+        ]);
+
+        $customer = Customer::findOrFail($id);
+
+        $customer->firstname = request('firstname');
+        $customer->lastname = request('lastname');
+        $customer->company = request('company');
+        $customer->phone = request('phone');
+        $customer->email = request('email');
+        $customer->address_street = request('address_street');
+        $customer->address_city = request('address_city');
+        $customer->address_postal = request('address_postal');
+        $customer->address_country = request('address_country');
+
+        $customer->update();
+
+        return redirect()->route('customers.show', $customer);
+
+
     }
 
     /**
@@ -121,8 +154,17 @@ class CustomersController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $projects = Project::get()->count();
+
+        if ($projects >= 1) {     
+            return redirect()->back();
+        }
+        else{
+            $customer->delete();
+            return redirect()->route('customers.index');
+        } 
     }
 }

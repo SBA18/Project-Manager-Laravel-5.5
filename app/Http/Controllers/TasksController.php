@@ -18,8 +18,8 @@ class TasksController extends Controller
     public function index()
     {
         $tasks = Task::latest()->get();
-
-        return view('tasks.index', compact('tasks'));
+        $projects_numbers = Project::get()->count();
+        return view('tasks.index', compact('tasks', 'projects_numbers'));
     }
 
     public function projecttask($id)
@@ -50,7 +50,10 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
+        $projects_numbers = Project::get()->count();
+
+        if ($projects_numbers != 0) {
+            $this->validate(request(), [
             'project_id' => 'required',
             'title' => 'required',
             'started_at' => 'required',
@@ -77,6 +80,11 @@ class TasksController extends Controller
         ]);
 
         return redirect()->route('tasks.show', $task);
+        }
+        else{
+             return redirect()->back()->with('message', 'You have to create a project first before creating a task');
+        }
+        
 
     }
 
@@ -99,9 +107,12 @@ class TasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit($id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $users = User::all();
+
+        return view('tasks.edit', compact('task', 'users'));
     }
 
     /**
@@ -111,9 +122,35 @@ class TasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        
+        $this->validate(request(), [
+            'title' => 'required',
+            'started_at' => 'required',
+            'ended_at' => 'required',
+            'status' => 'required',
+            'progress' => 'required',
+            'price' => 'required',
+            'affected_to' => 'required',
+            'task_decription' => 'required',
+        ]);
+
+        $task = Task::findOrFail($id);
+
+        $task->title = request('title');
+        $task->started_at = request('started_at');
+        $task->ended_at = request('ended_at');
+        $task->status = request('status');
+        $task->progress = request('progress');
+        $task->price = request('price');
+        $task->affected_to = request('affected_to');
+        $task->task_decription = request('task_decription');
+
+        $task->update();
+
+        return redirect()->route('tasks.show', $task);
     }
 
     /**
@@ -122,8 +159,13 @@ class TasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        $task->delete();
+
+        return redirect()->route('tasks.index');
+       
     }
 }

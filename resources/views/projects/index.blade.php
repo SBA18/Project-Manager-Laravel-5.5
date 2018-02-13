@@ -4,8 +4,12 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header"><i class="fa fa-bar-chart-o fa-1x"></i> Projects</h1> 
-        <a class="btn btn-primary" href="{{ route('projects.create') }}"><i class="fa fa-plus-square fa-fw"></i> New Project</a>
+        <h1 class="page-header"><i class="fa fa-bar-chart-o fa-1x"></i> Projects</h1>
+        @if($customers_numbers === 0) 
+            <a class="btn btn-primary disabled" href="{{ route('projects.create') }}"><i class="fa fa-plus-square fa-fw"></i> New Project</a>
+        @else
+            <a class="btn btn-primary" href="{{ route('projects.create') }}"><i class="fa fa-plus-square fa-fw"></i> New Project</a>
+        @endif
         <hr>
     </div>
     <!-- /.col-lg-12 -->
