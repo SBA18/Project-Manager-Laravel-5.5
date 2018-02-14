@@ -6,6 +6,7 @@ use App\Customer;
 use App\User;
 use Illuminate\Http\Request;
 use App\Project;
+use App\Comment;
 
 class CustomersController extends Controller
 {
@@ -89,10 +90,10 @@ class CustomersController extends Controller
     public function show($id)
     {
         $customer = Customer::find($id);
-
         $projects = Project::get()->count();
+        $comments = Comment::get()->count();
 
-        return view('customers.show', compact('customer', 'projects'));
+        return view('customers.show', compact('customer', 'projects', 'comments'));
     }
 
     /**

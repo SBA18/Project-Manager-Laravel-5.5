@@ -194,33 +194,75 @@
                     document.getElementById('delete-form').submit();" type="button" class="btn btn-danger"><i class="fa fa-trash-o fa-fw"></i> Delete
                     </a>
 
-                <form id="delete-form" action="{{ route('customers.destroy', $customer->id) }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-                </form>
-                    
-                
+                    <form id="delete-form" action="{{ route('customers.destroy', $customer->id) }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                    </form>  
                 @endif
-
 	        </p>
 	        <hr>
     	</div>            
     </div>
+    <div class="col-lg12">
+        <h1 class="page-header"><i class="fa fa-comments fa-1x"></i> Comments</h1>
+    </div>
     <div class="col-lg-12">
-    	<div class="col-lg-6">
-    		<form role="form">
-        		<div class="form-group">
-        			{{ csrf_field() }}
-                    <label>Comment</label>
-                    <textarea class="form-control" rows="3"></textarea>
+		<form role="form" method="POST" action="{{ route('comments.store') }}">
+    		<div class="form-group">
+    			{{ csrf_field() }}
+                <input type="hidden" name="customer_id" id="customer_id" value="{{ $customer->id }}">
+                <label>Leave a comment</label>
+                <textarea class="form-control" rows="3" name="body" id="body" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+            </div>
+            <hr>
+    	</form>
+    </div>
+
+	<div class="col-lg-12">
+        @if($customer->comments->count() >= 1)
+        @foreach($customer->comments as $comment)
+		<div class="panel panel-white post panel-shadow">
+            <div class="post-heading">
+                <div class="pull-left image">
+                    <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
                 </div>
-                <button type="submit" class="btn btn-default">Add Comment</button>
-        	</form>
-    	</div>
-    	<div class="col-lg-6">
-    		<p>Comments</p>
-    	</div>
-    </div>  
+                <div class="pull-left meta">
+                    <div class="title h5">
+                        <a href="#"><b>{{ $comment->user->name }}</b></a>
+                        
+                    </div>
+                    <h6 class="text-muted time">{{ $comment->created_at }}</h6>
+                </div>
+            </div> 
+            <div class="post-description"> 
+                <p>{{ $comment->body }}</p>
+                <div class="stats">
+                    <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-warning stat-item">
+                        <i class="fa fa-edit icon"></i>
+                    </a>
+
+                    <a href="{{ route('comments.destroy', $comment->id) }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('delete-form').submit();" type="button" class="btn btn-danger stat-item"><i class="fa fa-trash-o icon"></i>
+                    </a>
+
+                    <form id="delete-form" action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                    </form> 
+                </div>
+            </div>
+        </div>
+        @endforeach
+        @else
+        <div class="alert alert-warning align-center" role="alert">
+                No comments posted yet !
+        </div>
+        @endif
+	</div> 
 </div>
 
 @endsection

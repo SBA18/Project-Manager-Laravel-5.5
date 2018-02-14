@@ -22,4 +22,9 @@ class Customer extends Model
     {
     	return $this->hasMany(Task::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

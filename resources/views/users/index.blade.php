@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Users</h1>
+        <h1 class="page-header"><i class="fa fa-users fa-fw"></i> Users</h1>
         <a class="btn btn-primary" href="{{ URL('/register') }}"><i class="fa fa-edit fa-fw"></i> Add User</a>
         <hr>
     </div>

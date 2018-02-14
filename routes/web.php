@@ -42,3 +42,7 @@ Route::get('customerproject/{customer}', 'ProjectsController@customerproject')->
 
 Route::resource('tasks', 'TasksController');
 Route::get('projecttask/{project}', 'TasksController@projecttask')->name('projecttask');
+
+// Comments routes
+
+Route::resource('comments', 'CommentsController');
