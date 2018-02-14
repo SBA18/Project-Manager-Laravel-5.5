@@ -29,7 +29,7 @@ class HomeController extends Controller
     {  
         $customers = Customer::get()->count();
         $projects = Project::get()->count();
-        $tasks = DB::table('tasks')->where('status' , 'active')->count();
+        $tasks = Task::get()->count();
         return view('home', compact('customers', 'projects', 'tasks'));
     }
 }

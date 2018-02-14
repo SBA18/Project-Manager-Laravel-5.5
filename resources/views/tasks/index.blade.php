@@ -41,15 +41,15 @@
                         
                         @foreach($tasks as $task)
                         <tr class="odd gradeX">
-                            <td><a href="{{ route('tasks.show', $task->id) }}">{{ $task->title }}</a></td>
-                            <td>{{ $task->project->project_name }}</td>
+                            <td><a href="{{ route('tasks.show', $task->id) }}">{{ str_limit($task->title, 20) }}</a></td>
+                            <td><a href="{{ route('projects.show', $task->project->id) }}">{{ str_limit($task->project->project_name, 20) }}</a></td>
                             <td>{{ $task->started_at }}</td>
                             <td>{{ $task->ended_at }}</td>
                             <td>{{ $task->status }}</td>
                             <td>{{ $task->progress }}%</td>
                             <td>{{ $task->price }}$</td>
                             <td>{{ $task->affected_to }}</td>
-                            <td>{{ str_limit($task->task_decription, 50) }}</td>
+                            <td>{{ str_limit($task->task_decription, 30) }}</td>
                         </tr>
                         @endforeach
                          

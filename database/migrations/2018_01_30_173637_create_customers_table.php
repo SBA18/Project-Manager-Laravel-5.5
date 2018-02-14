@@ -20,10 +20,10 @@ class CreateCustomersTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('company');
-            $table->integer('phone');
+            $table->string('phone');
             $table->string('email')->unique();
             $table->string('address_street');
-            $table->integer('address_postal');
+            $table->string('address_postal');
             $table->string('address_city');
             $table->string('address_country');
             $table->timestamps();
