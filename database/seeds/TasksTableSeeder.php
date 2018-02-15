@@ -17,7 +17,7 @@ class TasksTableSeeder extends Seeder
         $faker = Factory::create();
         Task::truncate();
 
-         foreach(range(200, 800) as $i) {
+         foreach(range(500, 1000) as $i) {
             Task::create([
             	'project_id' => rand(1, 50),
             	'user_id' => rand(1, 50),

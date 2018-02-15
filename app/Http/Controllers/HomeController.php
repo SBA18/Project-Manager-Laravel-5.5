@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Customer;
 use App\Project;
 use App\Task;
+use App\Ticket;
+
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -30,6 +32,7 @@ class HomeController extends Controller
         $customers = Customer::get()->count();
         $projects = Project::get()->count();
         $tasks = Task::get()->count();
-        return view('home', compact('customers', 'projects', 'tasks'));
+        $tickets = Ticket::get()->count();
+        return view('home', compact('customers', 'projects', 'tasks', 'tickets'));
     }
 }

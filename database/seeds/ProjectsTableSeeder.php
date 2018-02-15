@@ -17,7 +17,7 @@ class ProjectsTableSeeder extends Seeder
         $faker = Factory::create();
         Project::truncate();
 
-        foreach(range(50, 100) as $i) {
+        foreach(range(50, 200) as $i) {
             Project::create([
             	'customer_id' => rand(1, 50),
             	'user_id' => rand(1, 50),

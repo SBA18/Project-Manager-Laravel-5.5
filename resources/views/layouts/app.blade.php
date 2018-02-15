@@ -301,12 +301,15 @@
                             </div>
                             <!-- /input-group -->
                         </li>
+                        
                         <li>
                             <a href="{{url('/home')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
+
                         <li>
                             <a href="{{ route('customers.index') }}"><i class="fa fa-user fa-fw"></i> Customers</a>
                         </li>
+
                         <li>
                             <a href="{{ route('projects.index') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Projects</a>
                         </li>
@@ -314,16 +317,15 @@
                         <li>
                             <a href="{{ route('tasks.index') }}"><i class="fa fa-tasks fa-fw"></i> Tasks</a>
                         </li>
+
                         <li>
-                            <a href="#"><i class="fa fa-support fa-fw"></i> Tickets</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-comments fa-fw"></i> Notes</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-money fa-fw"></i> Invoices</a>
+                            <a href="{{ route('tickets.index') }}"><i class="fa fa-support fa-fw"></i> Tickets</a>
                         </li>
 
+                        <li>
+                            <a href="{{ route('comments.index') }}"><i class="fa fa-comments fa-fw"></i> Comments</a>
+                        </li>
+                        
                         <li>
                             <a href="{{ route('users') }}"><i class="fa fa-users fa-fw"></i> Users</a>
                         </li>

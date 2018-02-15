@@ -135,33 +135,32 @@
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover">
+                            @if($customer->tickets->count() >= 1)
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Title</th>
+                                    <th>Level</th>
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($customer->tickets as $customer_ticket)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                    <td><a href="{{ route('tickets.show', $customer_ticket->id) }}">{{ str_limit($customer_ticket->title, 20) }}</a></td>
+                                    <td>{{ $customer_ticket->level }}</td>
+                                    <td>{{ $customer_ticket->status }}</td>
+                                    <td>{{ $customer_ticket->created_at->toDateString() }}</td>
+                                    <td>{{ str_limit($customer_ticket->description, 20) }}</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                </tr>
+                                
+                                @endforeach
+                             @else
+                            <div class="alert alert-warning align-center" role="alert">
+                                No Ticket created yet !
+                            </div>
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -184,7 +183,7 @@
     		<hr>
     		<p>
 	            <a href="{{ route('customerproject', $customer->id) }}" type="button" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i> New project</a> &nbsp;
-	            <a href="#" type="button" class="btn btn-info"><i class="fa fa-plus-square fa-fw"></i> New Ticket</a> &nbsp;
+	            <a href="{{ route('customerticket', $customer->id) }}" type="button" class="btn btn-info"><i class="fa fa-plus-square fa-fw"></i> New Ticket</a> &nbsp;
 	            <a href="{{ route('customers.edit', $customer->id) }}" type="button" class="btn btn-warning"><i class="fa fa-edit fa-fw"></i> Edit</a> &nbsp;
 	            @if($projects >= 1)
                     <a href="#" type="button" class="btn btn-danger disabled"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
@@ -234,7 +233,7 @@
                         <a href="#"><b>{{ $comment->user->name }}</b></a>
                         
                     </div>
-                    <h6 class="text-muted time">{{ $comment->created_at }}</h6>
+                    <h6 class="text-muted time">{{ $comment->created_at->diffForHumans() }}</h6>
                 </div>
             </div> 
             <div class="post-description"> 
