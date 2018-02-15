@@ -69,9 +69,10 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($useruniqid)
     {
-        //
+        $user = User::findOrFail($useruniqid);
+        return view('users.show', compact('user'));
     }
 
     /**

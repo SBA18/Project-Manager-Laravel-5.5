@@ -21,12 +21,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Users routes
 
-Route::get('/users', 'UsersController@index')->name('users');
-Route::get('/user/{user}', 'UsersController@show');
+Route::get('users', 'UsersController@index')->name('users');
 
-Route::get('/user/profile/{useruniqid}', 'UsersController@profile')->name('profile');
+Route::get('user/{user}', 'UsersController@show')->name('single_user');
 
-Route::get('/user/setting/{useruniqid}', 'UsersController@setting')->name('setting');
+Route::get('user/profile/{useruniqid}', 'UsersController@profile')->name('profile');
+
+Route::get('user/setting/{useruniqid}', 'UsersController@setting')->name('setting');
 
 // Customer routes
 

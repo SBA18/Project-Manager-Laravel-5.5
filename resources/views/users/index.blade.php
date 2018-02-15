@@ -29,18 +29,18 @@
                     <tbody>
                         @foreach($users as $user)
                         <tr class="odd gradeX">
-                            <td>{{ $user->name }}</td>
+                            <td><a href="{{ route('single_user', $user->id) }}">{{ $user->name }}</a></td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
                             <td>Admin</td>
                             <td>{{ $user->created_at->toDateString() }}</td>
                         </tr>
                         @endforeach
-                        
+
                     </tbody>
                 </table>
                 <!-- /.table-responsive -->
-                
+
             </div>
             <!-- /.panel-body -->
         </div>
