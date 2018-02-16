@@ -138,7 +138,7 @@
                     <a href="#" type="button" class="btn btn-info"><i class="fa fa-plus-square fa-fw"></i> New Ticket</a> &nbsp;
                     <a href="{{ route('projects.edit', $project->id) }}" type="button" class="btn btn-warning"><i class="fa fa-edit fa-fw"></i> Edit</a> &nbsp;
                     
-                    @if($tasks >= 1)
+                    @if($project->tasks->count() >= 1)
 
                     <a href="#" type="button" class="btn btn-danger disabled"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
                     @else

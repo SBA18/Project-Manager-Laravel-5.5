@@ -64,7 +64,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Project</label>
+                        <label>Affected To</label>
                         <select class="form-control" name="affected_to" id="affected_to" required>
                             @foreach($users as $user)
                             <option value="{{ $user->name }}">{{ $user->name }}</option>

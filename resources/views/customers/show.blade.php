@@ -185,7 +185,7 @@
 	            <a href="{{ route('customerproject', $customer->id) }}" type="button" class="btn btn-primary"><i class="fa fa-plus-square fa-fw"></i> New project</a> &nbsp;
 	            <a href="{{ route('customerticket', $customer->id) }}" type="button" class="btn btn-info"><i class="fa fa-plus-square fa-fw"></i> New Ticket</a> &nbsp;
 	            <a href="{{ route('customers.edit', $customer->id) }}" type="button" class="btn btn-warning"><i class="fa fa-edit fa-fw"></i> Edit</a> &nbsp;
-	            @if($projects >= 1)
+	            @if($customer->projects->count() >= 1)
                     <a href="#" type="button" class="btn btn-danger disabled"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
                 @else
                     <a href="{{ route('customers.destroy', $customer->id) }}"
