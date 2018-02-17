@@ -14,7 +14,14 @@ git clone https://github.com/acericonia/Project-Manager-Laravel-5.5.git
 Run the command below to install Laravel dependencies
 
 composer install
-Setting Up
+
+Copy env file :
+
+cp .env.example .env
+
+Generate Key :
+
+php artisan key:generate
 
 Setup your database and cd into the project directory then run:
 
